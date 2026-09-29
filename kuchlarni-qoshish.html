@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuchlarni qo'shish — 10-sinf fizika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1EC;
+    --panel:#FFFFFF;
+    --panel-2:#F6F7F3;
+    --text:#1B2430;
+    --text-dim:#5C6672;
+    --grid: rgba(27,36,48,0.08);
+    --line: rgba(27,36,48,0.14);
+    --teal:#1F8A7A;
+    --teal-soft: rgba(31,138,122,0.12);
+    --amber:#C9660B;
+    --amber-soft: rgba(201,102,11,0.12);
+    --coral:#C23B3B;
+    --coral-soft: rgba(194,59,59,0.12);
+    --blue:#2F5FA8;
+    --blue-soft: rgba(47,95,168,0.12);
+    --shadow: 0 1px 0 rgba(27,36,48,0.06);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B1220;
+      --panel:#121B2E;
+      --panel-2:#0F1826;
+      --text:#E8ECF1;
+      --text-dim:#93A0B4;
+      --grid: rgba(255,255,255,0.07);
+      --line: rgba(255,255,255,0.12);
+      --teal:#4FD1C5;
+      --teal-soft: rgba(79,209,197,0.14);
+      --amber:#F5A623;
+      --amber-soft: rgba(245,166,35,0.14);
+      --coral:#FF6B6B;
+      --coral-soft: rgba(255,107,107,0.14);
+      --blue:#7AA2F7;
+      --blue-soft: rgba(122,162,247,0.14);
+      --shadow: 0 1px 0 rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B1220;
+    --panel:#121B2E;
+    --panel-2:#0F1826;
+    --text:#E8ECF1;
+    --text-dim:#93A0B4;
+    --grid: rgba(255,255,255,0.07);
+    --line: rgba(255,255,255,0.12);
+    --teal:#4FD1C5;
+    --teal-soft: rgba(79,209,197,0.14);
+    --amber:#F5A623;
+    --amber-soft: rgba(245,166,35,0.14);
+    --coral:#FF6B6B;
+    --coral-soft: rgba(255,107,107,0.14);
+    --blue:#7AA2F7;
+    --blue-soft: rgba(122,162,247,0.14);
+    --shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); height:100%; }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100%;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/28px 28px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/28px 28px,
+      var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--teal-soft); }
+  h1,h2,h3{ font-family:'Space Grotesk','IBM Plex Sans',sans-serif; letter-spacing:-0.01em; margin:0; }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 18px 80px; }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:38px 0 22px; }
+  .kicker{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--teal); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .kicker .dash{ width:22px; height:1px; background:var(--teal); display:inline-block; }
+  .hero h1{ font-size:clamp(30px,7vw,44px); line-height:1.06; font-weight:700; }
+  .hero h1 em{ font-style:normal; color:var(--teal); }
+  .hero p{ color:var(--text-dim); font-size:16px; max-width:54ch; margin-top:14px; }
+  .hero-diagram{ margin-top:24px; border:1px solid var(--line); border-radius:4px; background:var(--panel); padding:6px; }
+  .hero-diagram svg{ display:block; width:100%; height:auto; }
+
+  /* ---------- Section chrome ---------- */
+  .section{ margin-top:64px; padding-top:20px; border-top:1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .section-num{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text-dim); }
+  .section h2{ font-size:clamp(22px,5vw,28px); font-weight:600; }
+  .section .dek{ color:var(--text-dim); font-size:15px; margin-top:8px; max-width:58ch; }
+
+  .prose{ margin-top:18px; font-size:15.5px; }
+  .prose p{ margin:0 0 12px; }
+  .prose strong{ color:var(--text); font-weight:600; }
+
+  .formula-box{
+    margin:16px 0; padding:14px 16px; background:var(--panel); border:1px solid var(--line);
+    border-left:3px solid var(--teal); border-radius:2px;
+    font-family:'IBM Plex Mono',monospace; font-size:16px; overflow-x:auto;
+  }
+  .formula-box .note{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:var(--text-dim); margin-top:6px; }
+  .formula-box.amber{ border-left-color:var(--amber); }
+  .formula-box.coral{ border-left-color:var(--coral); }
+  .formula-box.blue{ border-left-color:var(--blue); }
+
+  /* ---------- Panels / simulations ---------- */
+  .panel{
+    margin-top:20px; background:var(--panel); border:1px solid var(--line); border-radius:6px;
+    padding:16px; box-shadow:var(--shadow);
+  }
+  .panel-label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-transform:none; margin-bottom:10px; }
+  canvas{ display:block; width:100%; height:auto; border-radius:4px; background:var(--panel-2); touch-action:none; }
+
+  .controls{ margin-top:14px; display:grid; gap:14px; }
+  .control{ display:grid; gap:6px; }
+  .control-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; }
+  .control-top .val{ font-family:'IBM Plex Mono',monospace; font-weight:500; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
+    background:var(--line); outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--track-color, var(--teal)); cursor:pointer; border:3px solid var(--panel);
+    box-shadow:0 0 0 1px var(--track-color, var(--teal));
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%; border:3px solid var(--panel);
+    background:var(--track-color, var(--teal)); cursor:pointer; box-shadow:0 0 0 1px var(--track-color, var(--teal));
+  }
+  .readout{
+    margin-top:14px; display:flex; flex-wrap:wrap; gap:8px 20px; font-family:'IBM Plex Mono',monospace; font-size:13.5px;
+  }
+  .readout span.tag{ color:var(--text-dim); }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; margin-top:12px;
+    background:var(--teal-soft); color:var(--teal); border:1px solid transparent;
+  }
+  .status-pill.warn{ background:var(--coral-soft); color:var(--coral); }
+  .status-pill .dot{ width:6px; height:6px; border-radius:50%; background:currentColor; }
+
+  .btn-row{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+  button.btn{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; border:1px solid var(--line); background:var(--panel-2);
+    color:var(--text); padding:9px 16px; border-radius:4px; cursor:pointer; transition:border-color .15s, color .15s;
+  }
+  button.btn:hover{ border-color:var(--teal); color:var(--teal); }
+  button.btn.primary{ background:var(--teal); color:var(--bg); border-color:var(--teal); font-weight:600; }
+  button.btn.primary:hover{ opacity:.9; color:var(--bg); }
+
+  /* examples list */
+  .examples{ margin-top:16px; display:grid; gap:10px; }
+  .example{
+    display:flex; gap:12px; padding:12px 14px; background:var(--panel); border:1px solid var(--line); border-radius:6px; font-size:14.5px;
+  }
+  .example .ico{ font-size:20px; line-height:1; flex-shrink:0; }
+  .example .t{ color:var(--text-dim); }
+
+  /* two-col controls on wider screens */
+  @media (min-width:560px){
+    .controls.two-col{ grid-template-columns:1fr 1fr; }
+  }
+
+  /* legend */
+  .legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:12.5px; color:var(--text-dim); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend i{ width:10px; height:10px; border-radius:2px; display:inline-block; }
+
+  /* quiz */
+  .quiz-item{ margin-top:20px; padding:16px; background:var(--panel); border:1px solid var(--line); border-radius:6px; }
+  .quiz-q{ font-weight:600; font-size:15px; margin-bottom:12px; }
+  .quiz-opt{ display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:14.5px; cursor:pointer; }
+  .quiz-opt input{ margin-top:3px; accent-color:var(--teal); flex-shrink:0; }
+  .quiz-item.correct{ border-color:var(--teal); background:var(--teal-soft); }
+  .quiz-item.wrong{ border-color:var(--coral); background:var(--coral-soft); }
+  .quiz-feedback{ margin-top:10px; font-size:13.5px; color:var(--text-dim); display:none; }
+  .quiz-item.checked .quiz-feedback{ display:block; }
+  .score-box{
+    margin-top:22px; padding:18px; border-radius:6px; background:var(--panel); border:1px solid var(--line);
+    text-align:center; font-family:'IBM Plex Mono',monospace;
+  }
+  .score-box .big{ font-family:'Space Grotesk',sans-serif; font-size:34px; font-weight:700; color:var(--teal); }
+
+  footer{ margin-top:70px; padding-top:20px; border-top:1px solid var(--line); color:var(--text-dim); font-size:12.5px; text-align:center; }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="kicker"><span class="dash"></span>10-SINF &middot; FIZIKA &middot; DINAMIKA</div>
+    <h1>Kuchlarni <em>qo'shish</em></h1>
+    <p>Jismga bir vaqtning o'zida bir nechta kuch ta'sir etsa, uning harakatini bitta — <strong>natijaviy kuch</strong> — orqali tasvirlash mumkin. Quyida uchta simulyatsiya orqali muvozanat, tezlanish va vektorlarni qo'shishni his qilib ko'ramiz.</p>
+    <div class="hero-diagram">
+      <svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#C9660B"/></marker>
+          <marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1F8A7A"/></marker>
+          <marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2F5FA8"/></marker>
+        </defs>
+        <rect x="330" y="55" width="60" height="30" rx="3" fill="none" stroke="currentColor" opacity="0.5"/>
+        <line x1="330" y1="70" x2="230" y2="70" stroke="#C9660B" stroke-width="2.5" marker-end="url(#ah1)"/>
+        <line x1="390" y1="70" x2="470" y2="30" stroke="#1F8A7A" stroke-width="2.5" marker-end="url(#ah2)"/>
+        <line x1="390" y1="70" x2="560" y2="70" stroke="#2F5FA8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#ah3)"/>
+        <text x="225" y="63" font-family="IBM Plex Mono" font-size="12" fill="#C9660B" text-anchor="end">F&#8321;</text>
+        <text x="475" y="26" font-family="IBM Plex Mono" font-size="12" fill="#1F8A7A">F&#8322;</text>
+        <text x="565" y="63" font-family="IBM Plex Mono" font-size="12" fill="#2F5FA8">R</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SECTION 1 — MUVOZANATLASHGAN KUCHLAR -->
+  <section class="section" id="sec1">
+    <div class="section-head"><span class="section-num">01</span><h2>Muvozanatlashgan kuchlar</h2></div>
+    <p class="dek">Jismga ta'sir etuvchi kuchlarning yig'indisi nolga teng bo'lsa, jism muvozanat holatida bo'ladi.</p>
+
+    <div class="prose">
+      <p>Agar jismga <strong>ikki yoki undan ko'p kuch</strong> qarama-qarshi yo'nalishda, lekin bir xil kattalikda ta'sir qilsa, ularning natijaviy ta'siri bir-birini yo'qqa chiqaradi. Bunday holatda jism <strong>tinch holatda qoladi</strong> yoki <strong>tekis to'g'ri chiziqli harakatini davom ettiradi</strong> — bu Nyutonning birinchi qonuni (inersiya qonuni).</p>
+    </div>
+    <div class="formula-box">
+      &Sigma;F = F&#8321; + F&#8322; = 0 &nbsp;&nbsp;&rarr;&nbsp;&nbsp; |F&#8321;| = |F&#8322;|
+      <div class="note">Kuchlar qarama-qarshi yo'nalgan bo'lgani uchun vektor yig'indisi nolga teng.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">SIMULYATSIYA &middot; arqon tortishish</div>
+      <canvas id="cv1" width="640" height="220" aria-label="Muvozanatlashgan kuchlar simulyatsiyasi"></canvas>
+      <div class="controls">
+        <div class="control">
+          <div class="control-top"><span>Ikkala tomon kuchi, F</span><span class="val" id="eqForceVal">150 N</span></div>
+          <input id="eqForce" type="range" min="30" max="400" value="150" style="--track-color:var(--teal)">
+        </div>
+      </div>
+      <div class="readout">
+        <span><span class="tag">F&#8321; (chap) =</span> <b id="eqF1">150 N</b></span>
+        <span><span class="tag">F&#8322; (o'ng) =</span> <b id="eqF2">150 N</b></span>
+        <span><span class="tag">&Sigma;F =</span> <b id="eqSum">0 N</b></span>
+      </div>
+      <div class="status-pill" id="eqStatus"><span class="dot"></span> Muvozanatda — quti qo'zg'almaydi</div>
+    </div>
+
+    <div class="examples">
+      <div class="example"><span class="ico">📚</span><span><strong>Stol ustidagi kitob</strong> — <span class="t">og'irlik kuchi pastga, stol tik reaktsiyasi tepaga, ikkalasi teng.</span></span></div>
+      <div class="example"><span class="ico">🕯️</span><span><strong>Shiftga osilgan lyustra</strong> — <span class="t">ip tarangligi og'irlik kuchini muvozanatlaydi.</span></span></div>
+      <div class="example"><span class="ico">🪢</span><span><strong>Arqon tortishish o'yini</strong> — <span class="t">ikki jamoa teng kuch bilan tortsa, arqon joyidan qo'zg'almaydi.</span></span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — MUVOZANATLASHMAGAN KUCHLAR -->
+  <section class="section" id="sec2">
+    <div class="section-head"><span class="section-num">02</span><h2>Muvozanatlashmagan kuchlar</h2></div>
+    <p class="dek">Kuchlar teng bo'lmasa, jism tinch tura olmaydi — u tezlanish bilan harakatlana boshlaydi.</p>
+
+    <div class="prose">
+      <p>Agar qarama-qarshi kuchlar teng bo'lmasa, ularning farqi — <strong>natijaviy kuch</strong> — jismni harakatga keltiradi. Bu yerda <strong>Nyutonning ikkinchi qonuni</strong> ishga tushadi: tezlanish natijaviy kuchga to'g'ri, jism massasiga esa teskari proportsional.</p>
+    </div>
+    <div class="formula-box amber">
+      a = &Sigma;F / m = (F&#8322; &minus; F&#8321;) / m
+      <div class="note">F&#8322; &gt; F&#8321; bo'lsa, jism F&#8322; tomonga tezlanadi.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">SIMULYATSIYA &middot; ikki tomonlama tortishish, teng emas</div>
+      <canvas id="cv2" width="640" height="200" aria-label="Muvozanatlashmagan kuchlar simulyatsiyasi"></canvas>
+      <div class="controls two-col">
+        <div class="control">
+          <div class="control-top"><span style="color:var(--coral)">F&#8321; (chapga)</span><span class="val" id="f1Val">80 N</span></div>
+          <input id="f1" type="range" min="0" max="400" value="80" style="--track-color:var(--coral)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span style="color:var(--teal)">F&#8322; (o'ngga)</span><span class="val" id="f2Val">220 N</span></div>
+          <input id="f2" type="range" min="0" max="400" value="220" style="--track-color:var(--teal)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span>Massa, m</span><span class="val" id="mVal">4 kg</span></div>
+          <input id="mSlider" type="range" min="1" max="20" value="4" style="--track-color:var(--blue)">
+        </div>
+      </div>
+      <div class="readout">
+        <span><span class="tag">&Sigma;F =</span> <b id="netF">140 N</b></span>
+        <span><span class="tag">a =</span> <b id="accVal">35.0 m/s&sup2;</b></span>
+        <span><span class="tag">v =</span> <b id="velVal">0.0 m/s</b></span>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" id="playBtn">▶ Harakatni boshlash</button>
+        <button class="btn" id="resetBtn">↺ Qayta tiklash</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">GRAFIK &middot; kuch farqi va tezlanish bog'liqligi (joriy massa uchun, a = &Delta;F/m)</div>
+      <canvas id="cv3" width="640" height="220" aria-label="Kuch farqi va tezlanish grafigi"></canvas>
+      <div class="legend"><span><i style="background:var(--blue)"></i>a = &Delta;F/m to'g'ri chiziq</span><span><i style="background:var(--amber)"></i>joriy qiymat</span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — RESULTANT & COMPONENTS -->
+  <section class="section" id="sec3">
+    <div class="section-head"><span class="section-num">03</span><h2>Natijaviy kuch va tashkil etuvchilar</h2></div>
+    <p class="dek">Har qanday sondagi kuchni bitta natijaviy kuchga birlashtirish yoki, aksincha, bitta kuchni ikkita tashkil etuvchiga ajratish mumkin.</p>
+
+    <div class="prose">
+      <p><strong>Parallelogramm qoidasi:</strong> ikki vektorni umumiy nuqtadan chizib, ular ustiga parallelogramm quriladi — uning diagonali natijaviy kuch R bo'ladi.</p>
+      <p><strong>Uchburchak qoidasi:</strong> birinchi vektorning oxiridan ikkinchisini chizamiz — boshlang'ich nuqtadan oxirgi nuqtaga tortilgan kesma R bo'ladi. Ikkala usul bir xil natija beradi.</p>
+    </div>
+    <div class="formula-box blue">
+      R = &radic;(F&#8321;&sup2; + F&#8322;&sup2; + 2F&#8321;F&#8322;&middot;cos&alpha;)
+      <div class="note">&alpha; — F&#8321; va F&#8322; orasidagi burchak.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">SIMULYATSIYA &middot; vektorlarni qo'shish (parallelogramm usuli)</div>
+      <canvas id="cv4" width="640" height="320" aria-label="Vektorlarni qo'shish simulyatsiyasi"></canvas>
+      <div class="controls two-col">
+        <div class="control">
+          <div class="control-top"><span style="color:var(--coral)">F&#8321; kattaligi</span><span class="val" id="v1MagVal">120 N</span></div>
+          <input id="v1Mag" type="range" min="20" max="220" value="120" style="--track-color:var(--coral)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span style="color:var(--coral)">F&#8321; yo'nalishi</span><span class="val" id="v1AngVal">0&deg;</span></div>
+          <input id="v1Ang" type="range" min="0" max="360" value="0" style="--track-color:var(--coral)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span style="color:var(--teal)">F&#8322; kattaligi</span><span class="val" id="v2MagVal">90 N</span></div>
+          <input id="v2Mag" type="range" min="20" max="220" value="90" style="--track-color:var(--teal)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span style="color:var(--teal)">F&#8322; yo'nalishi</span><span class="val" id="v2AngVal">70&deg;</span></div>
+          <input id="v2Ang" type="range" min="0" max="360" value="70" style="--track-color:var(--teal)">
+        </div>
+      </div>
+      <div class="readout">
+        <span><span class="tag">|R| =</span> <b id="rMag">—</b></span>
+        <span><span class="tag">R yo'nalishi =</span> <b id="rAng">—</b></span>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--coral)"></i>F&#8321;</span>
+        <span><i style="background:var(--teal)"></i>F&#8322;</span>
+        <span><i style="background:var(--blue)"></i>R (natijaviy)</span>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:26px">
+      <p><strong>Tashkil etuvchilarga ajratish:</strong> qiya tekislikda turgan jismning og'irlik kuchi P ni tekislikka <em>parallel</em> (P&#8339;) va <em>perpendikular</em> (P&#7517;) tashkil etuvchilarga ajratamiz.</p>
+    </div>
+    <div class="formula-box">
+      P&#8339; = P&middot;sin&theta;&nbsp;&nbsp;&nbsp;&nbsp;P&#7517; = P&middot;cos&theta;
+      <div class="note">&theta; — qiya tekislikning gorizontga nisbatan og'ish burchagi.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">SIMULYATSIYA &middot; qiya tekislikdagi jism</div>
+      <canvas id="cv5" width="640" height="280" aria-label="Qiya tekislikda kuch tashkil etuvchilari"></canvas>
+      <div class="controls two-col">
+        <div class="control">
+          <div class="control-top"><span>Og'irlik kuchi, P</span><span class="val" id="pVal">200 N</span></div>
+          <input id="pSlider" type="range" min="50" max="400" value="200" style="--track-color:var(--amber)">
+        </div>
+        <div class="control">
+          <div class="control-top"><span>Og'ish burchagi, &theta;</span><span class="val" id="thVal">30&deg;</span></div>
+          <input id="thSlider" type="range" min="5" max="75" value="30" style="--track-color:var(--blue)">
+        </div>
+      </div>
+      <div class="readout">
+        <span><span class="tag">P&#8339; (tekislikka parallel) =</span> <b id="pParVal">100.0 N</b></span>
+        <span><span class="tag">P&#7517; (perpendikular) =</span> <b id="pPerpVal">173.2 N</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section" id="quiz">
+    <div class="section-head"><span class="section-num">04</span><h2>Nazorat savollari</h2></div>
+    <p class="dek">Javoblarni belgilab, "Tekshirish" tugmasini bosing.</p>
+    <div id="quizList"></div>
+    <button class="btn primary" id="checkQuiz" style="margin-top:18px">Javoblarni tekshirish</button>
+    <div class="score-box" id="scoreBox" style="display:none">
+      <div class="big" id="scoreBig">0 / 5</div>
+      <div id="scoreMsg" style="margin-top:6px;color:var(--text-dim);font-size:13px"></div>
+    </div>
+  </section>
+
+  <footer>Kuchlarni qo'shish &middot; 10-sinf fizika &middot; interaktiv dars materiali</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function fitCanvas(cv){
+    const ratio = window.devicePixelRatio || 1;
+    const w = cv.clientWidth || cv.width;
+    const h = cv.getAttribute('data-h') ? +cv.getAttribute('data-h') : cv.height;
+    cv.width = w * ratio; cv.height = h * ratio;
+    cv.style.height = h + 'px';
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(ratio,0,0,ratio,0,0);
+    return {ctx, w, h};
+  }
+  function css(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function drawArrow(ctx, x1,y1,x2,y2, color, width){
+    width = width || 3;
+    const headLen = 10;
+    const angle = Math.atan2(y2-y1, x2-x1);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = width; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x2,y2);
+    ctx.lineTo(x2 - headLen*Math.cos(angle-Math.PI/7), y2 - headLen*Math.sin(angle-Math.PI/7));
+    ctx.lineTo(x2 - headLen*Math.cos(angle+Math.PI/7), y2 - headLen*Math.sin(angle+Math.PI/7));
+    ctx.closePath(); ctx.fill();
+  }
+
+  /* ========== SECTION 1: equilibrium ========== */
+  const cv1 = document.getElementById('cv1');
+  const eqForce = document.getElementById('eqForce');
+  function drawEq(){
+    const {ctx,w,h} = fitCanvas(cv1);
+    ctx.clearRect(0,0,w,h);
+    const cx = w/2, cy = h/2;
+    const F = +eqForce.value;
+    const armLen = 10 + F*0.5;
+    // rope
+    ctx.strokeStyle = css('--line'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(30,cy); ctx.lineTo(w-30,cy); ctx.stroke();
+    // box
+    ctx.fillStyle = css('--panel-2'); ctx.strokeStyle = css('--text-dim'); ctx.lineWidth = 1.5;
+    ctx.fillRect(cx-24, cy-22, 48, 44); ctx.strokeRect(cx-24, cy-22, 48, 44);
+    // arrows
+    drawArrow(ctx, cx-26, cy, cx-26-armLen, cy, css('--coral'), 4);
+    drawArrow(ctx, cx+26, cy, cx+26+armLen, cy, css('--teal'), 4);
+    ctx.font = "12px 'IBM Plex Mono', monospace"; ctx.fillStyle = css('--coral');
+    ctx.textAlign = 'right'; ctx.fillText('F\u2081 = '+F+' N', cx-30-armLen, cy-10);
+    ctx.fillStyle = css('--teal'); ctx.textAlign = 'left';
+    ctx.fillText('F\u2082 = '+F+' N', cx+30+armLen, cy-10);
+
+    document.getElementById('eqForceVal').textContent = F+' N';
+    document.getElementById('eqF1').textContent = F+' N';
+    document.getElementById('eqF2').textContent = F+' N';
+    document.getElementById('eqSum').textContent = '0 N';
+  }
+  eqForce.addEventListener('input', drawEq);
+  window.addEventListener('resize', drawEq);
+
+  /* ========== SECTION 2: unbalanced forces ========== */
+  const cv2 = document.getElementById('cv2');
+  const f1S = document.getElementById('f1'), f2S = document.getElementById('f2'), mS = document.getElementById('mSlider');
+  const playBtn = document.getElementById('playBtn'), resetBtn = document.getElementById('resetBtn');
+  let boxPos = 0.5, boxVel = 0, playing = false, rafId = null, lastT = null;
+
+  function getPhysics(){
+    const F1 = +f1S.value, F2 = +f2S.value, m = +mS.value;
+    const net = F2 - F1;
+    const a = net/m;
+    return {F1,F2,m,net,a};
+  }
+  function drawSim2(){
+    const {ctx,w,h} = fitCanvas(cv2);
+    ctx.clearRect(0,0,w,h);
+    const cy = h/2;
+    ctx.strokeStyle = css('--line'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(20,cy); ctx.lineTo(w-20,cy); ctx.stroke();
+
+    const {F1,F2,m,net,a} = getPhysics();
+    const trackMin = 60, trackMax = w-60;
+    const bx = trackMin + boxPos*(trackMax-trackMin);
+    const scale = 0.45;
+
+    ctx.fillStyle = css('--panel-2'); ctx.strokeStyle = css('--text-dim'); ctx.lineWidth = 1.5;
+    ctx.fillRect(bx-22, cy-20, 44, 40); ctx.strokeRect(bx-22, cy-20, 44, 40);
+    ctx.font = "11px 'IBM Plex Mono', monospace"; ctx.fillStyle = css('--text-dim'); ctx.textAlign='center';
+    ctx.fillText(m+' kg', bx, cy+4);
+
+    if(F1>0) drawArrow(ctx, bx-24, cy, bx-24-F1*scale, cy, css('--coral'), 4);
+    if(F2>0) drawArrow(ctx, bx+24, cy, bx+24+F2*scale, cy, css('--teal'), 4);
+
+    ctx.textAlign='left';
+    document.getElementById('f1Val').textContent = F1+' N';
+    document.getElementById('f2Val').textContent = F2+' N';
+    document.getElementById('mVal').textContent = m+' kg';
+    document.getElementById('netF').textContent = net+' N';
+    document.getElementById('accVal').textContent = a.toFixed(1)+' m/s\u00B2';
+  }
+  function resetSim2(){
+    boxPos = 0.5; boxVel = 0; playing = false; lastT = null;
+    if(rafId) cancelAnimationFrame(rafId);
+    document.getElementById('velVal').textContent = '0.0 m/s';
+    playBtn.textContent = '▶ Harakatni boshlash';
+    drawSim2();
+  }
+  function step(t){
+    if(!playing) return;
+    if(lastT===null) lastT = t;
+    let dt = (t-lastT)/1000; lastT = t;
+    dt = Math.min(dt, 0.05);
+    const {a} = getPhysics();
+    const simA = a*0.02;
+    boxVel += simA*dt;
+    boxPos += boxVel*dt;
+    if(boxPos>1 || boxPos<0){
+      boxPos = Math.max(0, Math.min(1, boxPos));
+      boxVel *= -0.4;
+    }
+    document.getElementById('velVal').textContent = (boxVel*10).toFixed(1)+' m/s';
+    drawSim2();
+    rafId = requestAnimationFrame(step);
+  }
+  playBtn.addEventListener('click', function(){
+    playing = !playing;
+    if(playing){ playBtn.textContent = '⏸ To\u02bbxtatish'; lastT=null; rafId = requestAnimationFrame(step); }
+    else { playBtn.textContent = '▶ Harakatni boshlash'; if(rafId) cancelAnimationFrame(rafId); }
+  });
+  resetBtn.addEventListener('click', resetSim2);
+  [f1S,f2S,mS].forEach(el=> el.addEventListener('input', function(){ drawSim2(); drawGraph(); }));
+  window.addEventListener('resize', drawSim2);
+
+  /* ========== GRAPH: a vs deltaF ========== */
+  const cv3 = document.getElementById('cv3');
+  function drawGraph(){
+    const {ctx,w,h} = fitCanvas(cv3);
+    ctx.clearRect(0,0,w,h);
+    const pad = {l:46,r:18,t:16,b:32};
+    const plotW = w-pad.l-pad.r, plotH = h-pad.t-pad.b;
+    const {F1,F2,m} = getPhysics();
+    const maxDF = 400;
+    const maxA = maxDF/1; // worst case m=1
+    ctx.strokeStyle = css('--line'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,h-pad.b); ctx.lineTo(w-pad.r,h-pad.b); ctx.stroke();
+    ctx.fillStyle = css('--text-dim'); ctx.font = "10.5px 'IBM Plex Mono', monospace";
+    ctx.textAlign='center'; ctx.fillText('\u0394F (N) \u2192', pad.l+plotW/2, h-6);
+    ctx.save(); ctx.translate(14, pad.t+plotH/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center';
+    ctx.fillText('a (m/s\u00B2)', 0,0); ctx.restore();
+
+    function xOf(df){ return pad.l + (df/maxDF)*plotW; }
+    function yOf(a){ return h-pad.b - Math.min(a/ (maxDF/m), 1)*plotH; }
+
+    ctx.strokeStyle = css('--blue'); ctx.lineWidth = 2; ctx.beginPath();
+    for(let df=0; df<=maxDF; df+=8){
+      const a = df/m;
+      const x = xOf(df), y = h-pad.b - Math.min(a/(maxDF/m),1)*plotH;
+      if(df===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    const df = Math.abs(F2-F1);
+    const a = df/m;
+    const px = xOf(df), py = h-pad.b - Math.min(a/(maxDF/m),1)*plotH;
+    ctx.fillStyle = css('--amber');
+    ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = css('--amber'); ctx.setLineDash([3,3]); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(px,h-pad.b); ctx.lineTo(px,py); ctx.lineTo(pad.l,py); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = css('--text'); ctx.font = "11px 'IBM Plex Mono', monospace"; ctx.textAlign='left';
+    ctx.fillText('a = '+a.toFixed(1)+' m/s\u00B2', px+8, py-8);
+  }
+  window.addEventListener('resize', drawGraph);
+
+  /* ========== SECTION 3: vector addition ========== */
+  const cv4 = document.getElementById('cv4');
+  const v1Mag = document.getElementById('v1Mag'), v1Ang = document.getElementById('v1Ang');
+  const v2Mag = document.getElementById('v2Mag'), v2Ang = document.getElementById('v2Ang');
+  function drawVectors(){
+    const {ctx,w,h} = fitCanvas(cv4);
+    ctx.clearRect(0,0,w,h);
+    const ox = w/2, oy = h/2;
+    const scale = 0.9;
+    const m1 = +v1Mag.value, a1 = +v1Ang.value * Math.PI/180;
+    const m2 = +v2Mag.value, a2 = +v2Ang.value * Math.PI/180;
+    const x1 = m1*scale*Math.cos(a1), y1 = -m1*scale*Math.sin(a1);
+    const x2 = m2*scale*Math.cos(a2), y2 = -m2*scale*Math.sin(a2);
+    const rx = x1+x2, ry = y1+y2;
+
+    // axes
+    ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(w,oy); ctx.moveTo(ox,0); ctx.lineTo(ox,h); ctx.stroke();
+
+    // parallelogram construction (dashed)
+    ctx.strokeStyle = css('--text-dim'); ctx.setLineDash([4,4]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ox+x1,oy+y1); ctx.lineTo(ox+rx,oy+ry); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox+x2,oy+y2); ctx.lineTo(ox+rx,oy+ry); ctx.stroke();
+    ctx.setLineDash([]);
+
+    drawArrow(ctx, ox,oy, ox+x1,oy+y1, css('--coral'), 4);
+    drawArrow(ctx, ox,oy, ox+x2,oy+y2, css('--teal'), 4);
+    drawArrow(ctx, ox,oy, ox+rx,oy+ry, css('--blue'), 4);
+
+    ctx.fillStyle = css('--text-dim'); ctx.beginPath(); ctx.arc(ox,oy,3,0,Math.PI*2); ctx.fill();
+
+    const R = Math.sqrt(rx*rx+ry*ry)/scale;
+    let ang = Math.atan2(-ry,rx)*180/Math.PI; if(ang<0) ang+=360;
+    document.getElementById('rMag').textContent = R.toFixed(0)+' N';
+    document.getElementById('rAng').textContent = ang.toFixed(0)+'\u00B0';
+    document.getElementById('v1MagVal').textContent = m1+' N';
+    document.getElementById('v1AngVal').textContent = (+v1Ang.value)+'\u00B0';
+    document.getElementById('v2MagVal').textContent = m2+' N';
+    document.getElementById('v2AngVal').textContent = (+v2Ang.value)+'\u00B0';
+  }
+  [v1Mag,v1Ang,v2Mag,v2Ang].forEach(el=>el.addEventListener('input', drawVectors));
+  window.addEventListener('resize', drawVectors);
+
+  /* ========== inclined plane ========== */
+  const cv5 = document.getElementById('cv5');
+  const pSlider = document.getElementById('pSlider'), thSlider = document.getElementById('thSlider');
+  function drawIncline(){
+    const {ctx,w,h} = fitCanvas(cv5);
+    ctx.clearRect(0,0,w,h);
+    const P = +pSlider.value, th = +thSlider.value;
+    const rad = th*Math.PI/180;
+    const baseLen = Math.min(w-80, 480);
+    const bx0 = (w-baseLen)/2, by0 = h-50;
+    const bx1 = bx0+baseLen, by1 = by0 - baseLen*Math.tan(rad);
+    // ground
+    ctx.strokeStyle = css('--line'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bx0,by0); ctx.lineTo(bx1,by0); ctx.stroke();
+    // incline
+    ctx.strokeStyle = css('--text-dim'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bx0,by0); ctx.lineTo(bx0,by1); ctx.lineTo(bx1,by0); ctx.closePath();
+    ctx.fillStyle = css('--panel-2'); ctx.fill(); ctx.stroke();
+
+    // block on incline at 55% up the slope
+    const t = 0.55;
+    const px = bx0 + (bx1-bx0)*t*Math.cos(rad)*Math.cos(rad) + (bx0 - bx0);
+    // simpler: point on hypotenuse
+    const hx0=bx0, hy0=by0, hx1=bx1, hy1=by0-(bx1-bx0)*Math.tan(rad);
+    const bx = hx0 + (hx1-hx0)*t, byy = hy0 + (hy1-hy0)*t;
+    ctx.save();
+    ctx.translate(bx,byy-12); ctx.rotate(-rad);
+    ctx.fillStyle = css('--panel'); ctx.strokeStyle = css('--amber'); ctx.lineWidth=1.5;
+    ctx.fillRect(-18,-14,36,28); ctx.strokeRect(-18,-14,36,28);
+    ctx.restore();
+
+    const scale = 0.35;
+    const Ppar = P*Math.sin(rad), Pperp = P*Math.cos(rad);
+    const parDirX = Math.cos(rad), parDirY = Math.sin(rad);
+    const nx = Math.sin(rad), ny = Math.cos(rad);
+    // weight P straight down
+    drawArrow(ctx, bx,byy-12, bx, byy-12+P*scale, css('--amber'), 3);
+    // component parallel to incline (down-slope)
+    drawArrow(ctx, bx,byy-12, bx+Ppar*scale*parDirX, byy-12+Ppar*scale*parDirY, css('--coral'), 3);
+    // component perpendicular to incline (into the surface)
+    drawArrow(ctx, bx,byy-12, bx+Pperp*scale*nx, byy-12+Pperp*scale*ny, css('--blue'), 3);
+
+    ctx.font = "11px 'IBM Plex Mono', monospace"; ctx.fillStyle = css('--text-dim'); ctx.textAlign='left';
+    ctx.fillText('\u03B8 = '+th+'\u00B0', bx0+14, by0-8);
+
+    document.getElementById('pVal').textContent = P+' N';
+    document.getElementById('thVal').textContent = th+'\u00B0';
+    document.getElementById('pParVal').textContent = Ppar.toFixed(1)+' N';
+    document.getElementById('pPerpVal').textContent = Pperp.toFixed(1)+' N';
+  }
+  [pSlider,thSlider].forEach(el=>el.addEventListener('input', drawIncline));
+  window.addEventListener('resize', drawIncline);
+
+  /* ========== initial draw ========== */
+  drawEq(); drawSim2(); drawGraph(); drawVectors(); drawIncline();
+
+  /* ========== QUIZ ========== */
+  const questions = [
+    {
+      q: "1) Jismga ta'sir etuvchi kuchlar yig'indisi &Sigma;F = 0 bo'lsa, jism qanday holatda bo'ladi?",
+      opts: ["Doim tezlanadi", "Tinch holatda yoki tekis to'g'ri chiziqli harakatda bo'ladi", "Doim aylanma harakat qiladi", "Massasi ortadi"],
+      correct: 1,
+      fb: "Bu — Nyutonning birinchi qonuni (inersiya qonuni)."
+    },
+    {
+      q: "2) F&#8321; = 60 N va F&#8322; = 100 N qarama-qarshi yo'nalgan kuchlar jismga ta'sir qilmoqda. Natijaviy kuch qanchaga teng?",
+      opts: ["160 N", "40 N", "0 N", "6000 N"],
+      correct: 1,
+      fb: "&Sigma;F = F\u2082 \u2212 F\u2081 = 100 \u2212 60 = 40 N."
+    },
+    {
+      q: "3) Massasi 5 kg bo'lgan jismga 20 N natijaviy kuch ta'sir qilsa, tezlanish nechaga teng?",
+      opts: ["100 m/s\u00B2", "25 m/s\u00B2", "4 m/s\u00B2", "0.25 m/s\u00B2"],
+      correct: 2,
+      fb: "a = F/m = 20/5 = 4 m/s\u00B2 (Nyutonning ikkinchi qonuni)."
+    },
+    {
+      q: "4) Ikki kuchning natijaviysini topishda diagonal orqali aniqlanadigan usul qanday nomlanadi?",
+      opts: ["Uchburchak qoidasi", "Parallelogramm qoidasi", "Ombor qoidasi", "Simmetriya qoidasi"],
+      correct: 1,
+      fb: "Parallelogramm qoidasida ikki vektor ustiga qurilgan parallelogrammning diagonali natijaviy kuchni beradi."
+    },
+    {
+      q: "5) Qiya tekislikda turgan jism og'irligi P ning tekislikka parallel tashkil etuvchisi qaysi formula bilan topiladi?",
+      opts: ["P\u00B7cos\u03B8", "P\u00B7sin\u03B8", "P/\u03B8", "P\u00B7tan\u03B8"],
+      correct: 1,
+      fb: "Tekislikka parallel tashkil etuvchi P\u2225 = P\u00B7sin\u03B8, perpendikular tashkil etuvchi P\u22a5 = P\u00B7cos\u03B8."
+    }
+  ];
+  const quizList = document.getElementById('quizList');
+  questions.forEach((item, qi)=>{
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.dataset.qi = qi;
+    let optsHtml = item.opts.map((o,oi)=>
+      `<label class="quiz-opt"><input type="radio" name="q${qi}" value="${oi}">${o}</label>`
+    ).join('');
+    div.innerHTML = `<div class="quiz-q">${item.q}</div>${optsHtml}<div class="quiz-feedback">${item.fb}</div>`;
+    quizList.appendChild(div);
+  });
+  document.getElementById('checkQuiz').addEventListener('click', function(){
+    let score = 0;
+    questions.forEach((item, qi)=>{
+      const div = quizList.querySelector(`[data-qi="${qi}"]`);
+      const sel = div.querySelector(`input[name="q${qi}"]:checked`);
+      div.classList.add('checked');
+      div.classList.remove('correct','wrong');
+      if(sel && +sel.value === item.correct){ score++; div.classList.add('correct'); }
+      else { div.classList.add('wrong'); }
+    });
+    const box = document.getElementById('scoreBox');
+    box.style.display = 'block';
+    document.getElementById('scoreBig').textContent = score+' / '+questions.length;
+    let msg = score===questions.length ? "Ajoyib! Barcha savollarga to'g'ri javob berdingiz." :
+              score>=3 ? "Yaxshi natija! Xato javoblarni qayta ko'rib chiqing." :
+              "Mavzuni yana bir bor takrorlab chiqing.";
+    document.getElementById('scoreMsg').textContent = msg;
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+})();
+</script>
+</body>
+</html>
